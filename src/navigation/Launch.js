@@ -8,30 +8,29 @@ import {
 } from 'react-native'
 import { useDispatch } from 'react-redux'
 
-//import { saveAuthDetails, getFavorites, getConfig, saveDeviceToken } from '../actions/auth'
+import { saveUser } from '../actions/auth'
 import { blue } from '../config/colors'
 
 const Launch = ({ navigation }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    AsyncStorage.clear()
-    //redirect()
+    //AsyncStorage.clear()
+    redirect()
   }, [])
 
   const redirect = async () => {
-    // try {
-    //   const station = await AsyncStorage.getItem('station')
+    try {
+      const user = await AsyncStorage.getItem('user')
+      const token = await AsyncStorage.getItem('token')
 
-    //   if (station) {
-    //     dispatch(saveAuthDetails(station))
-    //     dispatch(getFavorites(true))
-    //     dispatch(getConfig(navigation))
-    //     // navigation.navigate('Main')
-    //   } else navigation.navigate('Auth')
-    // } catch (err) {
-    //   navigation.navigate('Auth')
-    // }
+      if (token && user) {
+        dispatch(saveUser(JSON.parse(token), JSON.parse(user)))
+      } else navigation.navigate('Onboarding')
+    } catch (err) {
+      console.log('launch error', err)
+      navigation.navigate('Onboarding')
+    }
   }
 
   return (

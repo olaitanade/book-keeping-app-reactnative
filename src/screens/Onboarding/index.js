@@ -23,9 +23,9 @@ const FirstTab = () => {
   return (
     <View style={styles.tab}>
       <Walkthrough1Icon />
-      <BoldText style={styles.title}>Learn from experts</BoldText>
+      <BoldText style={styles.title}>Securely record your daily transactions</BoldText>
       <Text style={styles.description}>
-        Build skills from top instructors from leading universities and industries
+        Using Huzz, you monitor your income and expenses everyday
       </Text>
     </View>
   )
@@ -35,9 +35,10 @@ const SecondTab = () => {
   return (
     <View style={styles.tab}>
       <Walkthrough2Icon />
-      <BoldText style={styles.title}>Pursue any goal</BoldText>
+      <BoldText style={styles.title}>Collect money from debtors 3x faster</BoldText>
       <Text style={styles.description}>
-        Master job-relevant skills and earn career credentials
+        You don't need to chase your debtors anymore. Huzz FREE WhatsApp {'&'} SMS reminders gets your 
+        money back faster
       </Text>
     </View>
   )
@@ -47,9 +48,10 @@ const ThirdTab = () => {
   return (
     <View style={styles.tab}>
       <Walkthrough3Icon />
-      <BoldText style={styles.title}>Start today</BoldText>
+      <BoldText style={styles.title}>Get up to $20 weekly in rewards</BoldText>
       <Text style={styles.description}>
-        Choose from hundreds of free courses. Master job-relevant skills and earn career credentials. Choose from hundreds of free courses
+        When you record your daily transactions or invite other friends to use Kippa, you are rewarded with money
+        from us
       </Text>
     </View>
   )
@@ -142,7 +144,7 @@ const Onboarding = ({ navigation }) => {
             ) : (
               <Button onPress={gotoLogin}>
                 <View style={styles.button}>
-                  <Text style={styles.buttonText}>Get Started</Text>
+                  <Text style={styles.buttonText}>Start Using Huzz </Text>
                   <MaterialIcons
                     name="arrow-right-alt"
                     size={22}
