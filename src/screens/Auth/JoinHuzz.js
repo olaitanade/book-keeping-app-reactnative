@@ -48,7 +48,7 @@ const JoinHuzz = ({ navigation }) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
-        <Header  title='Join Huzz'/>
+        <Header  title='Join Huzz' progress={0.3}/>
         <ScrollView style={styles.content}>
           <SafeAreaView style={styles.headerContainer}>
             <View style={styles.header}>
@@ -66,6 +66,7 @@ const JoinHuzz = ({ navigation }) => {
               onChangeText={(username) => handleInput({ username })}
               keyboardType="numeric"
               autoCapitalize="none"
+              showCountryCode
             />
             <Input
               label="Email(Optional)"
@@ -78,6 +79,7 @@ const JoinHuzz = ({ navigation }) => {
             <Button
               //loading={loading}
               onPress={handleLogin}
+              style={{marginTop:30,padding:25}}
             >
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Next</Text>
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   },
   privacyText: {
     color: textSecondary,
-    marginTop: 20,
+    marginTop: 30,
   },
 })
 
