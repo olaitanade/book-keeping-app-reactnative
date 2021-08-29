@@ -16,7 +16,8 @@ const Launch = ({ navigation }) => {
 
   useEffect(() => {
     //AsyncStorage.clear()
-    redirect()
+    //redirect()
+    navigation.navigate('Onboarding')
   }, [])
 
   const redirect = async () => {

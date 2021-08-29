@@ -3,7 +3,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 
 import Launch from './Launch'
 import Onboarding from './Onboarding'
-//import Auth from './Auth'
+import Auth from './Auth'
 //import Main from './Main'
 import NavigationService from './NavigationService'
 
@@ -11,7 +11,7 @@ const Navigation = () => {
   const SwitchNavigator = createSwitchNavigator({
     Launch,
     Onboarding,
-    //Auth,
+    Auth,
     //Main,
   })
 

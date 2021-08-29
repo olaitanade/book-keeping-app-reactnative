@@ -4,21 +4,28 @@ import JoinHuzz from '../screens/Auth/JoinHuzz'
 import SignIn from '../screens/Auth/SignIn'
 import CreateBusiness from '../screens/Auth/CreateBusiness'
 import CreatePin from '../screens/Auth/CreatePin'
-import SignIn from '../screens/Auth/SignIn'
-import ForgotPassword from '../screens/ForgotPassword'
-import ResetPassword from '../screens/ResetPassword'
+import ForgotPassword from '../screens/Auth/ForgotPassword'
+import ResetPassword from '../screens/Auth/ResetPassword'
 
 const navigationOptions = {
   headerShown: false,
 }
 
 const AuthNavigator = createStackNavigator({
-  EnterDomain: {
-    screen: EnterDomain,
+  JoinHuzz: {
+    screen: JoinHuzz,
     navigationOptions,
   },
-  Login: {
-    screen: Login,
+  SignIn: {
+    screen: SignIn,
+    navigationOptions,
+  },
+  CreateBusiness: {
+    screen: CreateBusiness,
+    navigationOptions,
+  },
+  CreatePin: {
+    screen: CreatePin,
     navigationOptions,
   },
   ForgotPassword: {

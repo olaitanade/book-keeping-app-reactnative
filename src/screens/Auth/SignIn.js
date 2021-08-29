@@ -14,13 +14,12 @@ import {
   backgroundGrey,
   blue,
   textSecondary,
-} from '../constants/colors'
-import Text, { VeryBoldText, BoldText } from '../components/Text'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import { setAuthToken } from '../helpers/token'
-import { showApiError } from '../helpers/handleError'
-import BackIcon from '../assets/icons/back-icon.svg'
+} from '../../config/colors'
+import Text, { VeryBoldText, BoldText } from '../../components/Text'
+import Input from '../../components/Input'
+import Button from '../../components/Button'
+import { showApiError } from '../../helpers/api'
+import BackIcon from '../../assets/icons/back-icon.svg'
 
 const SignIn = ({ navigation }) => {
   const domain = navigation.getParam('domain', null)
@@ -53,7 +52,7 @@ const SignIn = ({ navigation }) => {
 
         console.log('login', userData)
         if (userData?.roles?.includes('STUDENT')) {
-          setAuthToken(token)
+          //setAuthToken(token)
           client.writeQuery({
             query: LOGGED_IN_USER_QUERY,
             data: { loggedInUser: userData },

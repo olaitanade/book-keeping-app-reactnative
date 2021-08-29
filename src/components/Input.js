@@ -23,7 +23,7 @@ import {
   borderGrey,
   blue,
   backgroundGrey,
-} from '../constants/colors'
+} from '../config/colors'
 import CalenderIcon from '../assets/icons/calendar-icon.svg'
 
 export default ({

@@ -73,7 +73,7 @@ const Onboarding = ({ navigation }) => {
 
   const gotoLogin = () => {
     AsyncStorage.setItem('onboarded', 'true')
-    navigation.navigate('EnterDomain')
+    navigation.navigate('JoinHuzz')
   }
 
   const changeIndex = (increment) => {
