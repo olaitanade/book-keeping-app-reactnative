@@ -48,7 +48,7 @@ const CreateBusiness = ({ navigation }) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
-        <Header back noRight  title='Create Business' progress={0.5}/>
+        <Header back noRight  title='Create Business' progress={0.9}/>
         <ScrollView style={styles.content}>
           <SafeAreaView style={styles.headerContainer}>
             <View style={styles.header}>
@@ -59,22 +59,7 @@ const CreateBusiness = ({ navigation }) => {
             </View>
           </SafeAreaView>
           <View style={styles.body}>
-            <Input
-              label="First name"
-              placeholder="Adetayo"
-              value={user.username}
-              onChangeText={(username) => handleInput({ username })}
-              keyboardType="default"
-              autoCapitalize="none"
-            />
-            <Input
-              label="Last name"
-              placeholder="Olaitan"
-              value={user.username}
-              onChangeText={(username) => handleInput({ username })}
-              keyboardType="default"
-              autoCapitalize="none"
-            />
+            
             <Input
               label="Business name"
               placeholder="Real Estate"

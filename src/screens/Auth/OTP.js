@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 
 import {
   backgroundGrey,
@@ -18,57 +18,27 @@ import {
 import Text, { VeryBoldText, BoldText } from '../../components/Text'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
+import Header from '../../components/Header'
 //import { setAuthToken } from '../../helpers/token'
 import { showApiError } from '../../helpers/api'
 import BackIcon from '../../assets/icons/back-icon.svg'
+import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
+
 
 const OTP = ({ navigation }) => {
-  const domain = navigation.getParam('domain', null)
+  const [otp, setOTP] = useState("")
+  const pinInput = React.createRef();
 
-  const [user, setUser] = useState({
-    username: '',
-    password: '',
-  })
-
-  const handleInput = (value) => {
-    setUser({
-      ...user,
-      ...value,
-    })
+  const _checkCode = (code) => {
+    if (code != '1234') {
+      pinInput.current.shake()
+        .then(() => setOTP(""));
+    }
   }
 
-  const [login, { loading, client }] = useMutation(LOGIN_USER, {
-    onError: (error) => {
-      showApiError(error?.message)
-    },
-  })
 
   const handleLogin = async () => {
-    try {
-      const { username: email, password } = user
-      const { data, errors } = await login({ variables: { email, password, institutionId: domain?.value } })
-
-      if (data) {
-        const { login: { token, user: userData } } = data
-
-        console.log('login', userData)
-        if (userData?.roles?.includes('STUDENT')) {
-          //setAuthToken(token)
-          client.writeQuery({
-            query: LOGGED_IN_USER_QUERY,
-            data: { loggedInUser: userData },
-          })
-
-          navigation.navigate('Main')
-        } else {
-          showApiError('You don\'t have access to this platform')
-        }
-      } else {
-        console.log({ errors })
-      }
-    } catch (error) {
-      showApiError(error?.message, true, handleLogin)
-    }
+    navigation.navigate('CreateProfile')
   }
 
   return (
@@ -77,52 +47,34 @@ const OTP = ({ navigation }) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
+        <Header back noRight  title='Verification' progress={0.5}/>
         <ScrollView style={styles.content}>
           <SafeAreaView style={styles.headerContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ marginLeft: 20 }}
-            >
-              <BackIcon color={textSecondary} />
-            </TouchableOpacity>
             <View style={styles.header}>
-              <VeryBoldText style={styles.logoText}>DSLMS</VeryBoldText>
-              <BoldText style={styles.title}>
-                Online learning
-                {'\n'}
-                platform
-              </BoldText>
+              <Ionicons name="ios-information-circle-sharp" size={24} color="black" />
+              <Text style={ styles.headerText }>
+                Enter OTP sent to you via sms and email
+              </Text>
             </View>
           </SafeAreaView>
           <View style={styles.body}>
-            <BoldText style={styles.formTitle}>Log in</BoldText>
-            <Input
-              label="Username"
-              placeholder="ID or Email address"
-              value={user.username}
-              onChangeText={(username) => handleInput({ username })}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-            <Input
-              label="Password"
-              placeholder="********"
-              value={user.password}
-              onChangeText={(password) => handleInput({ password })}
-              secureTextEntry
-            />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ForgotPassword')}
-              style={styles.forgotPassword}
-            >
-              <Text style={{ color: blue }}>Forgot Password?</Text>
-            </TouchableOpacity>
+            <View style={styles.otp}>
+            <SmoothPinCodeInput
+              ref={pinInput}
+              value={otp}
+              onTextChange={code => setOTP(code)}
+              onFulfill={_checkCode}
+              onBackspace={() => console.log('No more back.')}
+              />
+            </View>
+          
             <Button
-              loading={loading}
+              //loading={loading}
               onPress={handleLogin}
+              style={{marginTop:30,padding:25}}
             >
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Get Started</Text>
+                <Text style={styles.buttonText}>Next</Text>
                 <MaterialIcons
                   name="arrow-right-alt"
                   size={22}
@@ -130,15 +82,6 @@ const OTP = ({ navigation }) => {
                 />
               </View>
             </Button>
-            <Text style={styles.privacyText}>
-              By clicking Sign in, you agree to our
-              {' '}
-              <Text style={{ color: blue }}>Terms of use</Text>
-              {' '}
-              and our
-              {' '}
-              <Text style={{ color: blue }}>Privacy Policy</Text>
-            </Text>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -181,6 +124,11 @@ const styles = StyleSheet.create({
   formTitle: {
     fontSize: 22,
     marginBottom: 10,
+  },
+  otp: {
+    margin: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     flexDirection: 'row',

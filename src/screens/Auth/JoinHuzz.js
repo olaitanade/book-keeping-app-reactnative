@@ -39,7 +39,7 @@ const JoinHuzz = ({ navigation }) => {
   }
 
   const handleLogin = async () => {
-    navigation.navigate('CreateBusiness')
+    navigation.navigate('OTP')
   }
 
   return (

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 
 import {
   backgroundGrey,
@@ -18,12 +18,13 @@ import {
 import Text, { VeryBoldText, BoldText } from '../../components/Text'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
+import Header from '../../components/Header'
 //import { setAuthToken } from '../../helpers/token'
 import { showApiError } from '../../helpers/api'
 import BackIcon from '../../assets/icons/back-icon.svg'
+import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio'
 
 const CreatePin = ({ navigation }) => {
-  const domain = navigation.getParam('domain', null)
 
   const [user, setUser] = useState({
     username: '',
@@ -37,38 +38,8 @@ const CreatePin = ({ navigation }) => {
     })
   }
 
-  const [login, { loading, client }] = useMutation(LOGIN_USER, {
-    onError: (error) => {
-      showApiError(error?.message)
-    },
-  })
-
   const handleLogin = async () => {
-    try {
-      const { username: email, password } = user
-      const { data, errors } = await login({ variables: { email, password, institutionId: domain?.value } })
-
-      if (data) {
-        const { login: { token, user: userData } } = data
-
-        console.log('login', userData)
-        if (userData?.roles?.includes('STUDENT')) {
-          //setAuthToken(token)
-          client.writeQuery({
-            query: LOGGED_IN_USER_QUERY,
-            data: { loggedInUser: userData },
-          })
-
-          navigation.navigate('Main')
-        } else {
-          showApiError('You don\'t have access to this platform')
-        }
-      } else {
-        console.log({ errors })
-      }
-    } catch (error) {
-      showApiError(error?.message, true, handleLogin)
-    }
+    navigation.navigate('CreateBusiness')
   }
 
   return (
@@ -77,52 +48,48 @@ const CreatePin = ({ navigation }) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
+        <Header back noRight  title='Create Business' progress={0.5}/>
         <ScrollView style={styles.content}>
           <SafeAreaView style={styles.headerContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{ marginLeft: 20 }}
-            >
-              <BackIcon color={textSecondary} />
-            </TouchableOpacity>
             <View style={styles.header}>
-              <VeryBoldText style={styles.logoText}>DSLMS</VeryBoldText>
-              <BoldText style={styles.title}>
-                Online learning
-                {'\n'}
-                platform
-              </BoldText>
+              <Ionicons name="ios-information-circle-sharp" size={24} color="black" />
+              <Text style={ styles.headerText }>
+                Business Profile Setup
+              </Text>
             </View>
           </SafeAreaView>
           <View style={styles.body}>
-            <BoldText style={styles.formTitle}>Log in</BoldText>
             <Input
-              label="Username"
-              placeholder="ID or Email address"
+              label="First name"
+              placeholder="Adetayo"
               value={user.username}
               onChangeText={(username) => handleInput({ username })}
-              keyboardType="email-address"
+              keyboardType="default"
               autoCapitalize="none"
             />
             <Input
-              label="Password"
-              placeholder="********"
-              value={user.password}
-              onChangeText={(password) => handleInput({ password })}
-              secureTextEntry
+              label="Last name"
+              placeholder="Olaitan"
+              value={user.username}
+              onChangeText={(username) => handleInput({ username })}
+              keyboardType="default"
+              autoCapitalize="none"
             />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ForgotPassword')}
-              style={styles.forgotPassword}
-            >
-              <Text style={{ color: blue }}>Forgot Password?</Text>
-            </TouchableOpacity>
+            <Input
+              label="Business name"
+              placeholder="Real Estate"
+              value={user.username}
+              onChangeText={(username) => handleInput({ username })}
+              keyboardType="default"
+              autoCapitalize="none"
+            />
             <Button
-              loading={loading}
+              //loading={loading}
               onPress={handleLogin}
+              style={{marginTop:30,padding:25}}
             >
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Get Started</Text>
+                <Text style={styles.buttonText}>Next</Text>
                 <MaterialIcons
                   name="arrow-right-alt"
                   size={22}
@@ -130,15 +97,6 @@ const CreatePin = ({ navigation }) => {
                 />
               </View>
             </Button>
-            <Text style={styles.privacyText}>
-              By clicking Sign in, you agree to our
-              {' '}
-              <Text style={{ color: blue }}>Terms of use</Text>
-              {' '}
-              and our
-              {' '}
-              <Text style={{ color: blue }}>Privacy Policy</Text>
-            </Text>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -158,9 +116,16 @@ const styles = StyleSheet.create({
     backgroundColor: backgroundGrey,
   },
   header: {
+    flexDirection: 'row',
+    alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 50,
+    paddingVertical: 20,
   },
+
+  headerText: {
+    padding: 20,
+  },
+
   logoText: {
     color: blue,
     fontSize: 22,
@@ -176,7 +141,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
     paddingVertical: 30,
     paddingHorizontal: 20,
-    marginTop: -32,
+    marginTop: -10,
   },
   formTitle: {
     fontSize: 22,
@@ -197,7 +162,7 @@ const styles = StyleSheet.create({
   },
   privacyText: {
     color: textSecondary,
-    marginTop: 20,
+    marginTop: 30,
   },
 })
 
