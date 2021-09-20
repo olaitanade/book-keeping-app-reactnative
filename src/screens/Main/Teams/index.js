@@ -14,18 +14,27 @@ import {
   backgroundGrey,
   blue,
   textSecondary,
-} from '../../config/colors'
-import Text, { VeryBoldText, BoldText } from '../../components/Text'
-import Input from '../../components/Input'
-import Button from '../../components/Button'
-import Header from '../../components/Header'
+} from '../../../config/colors'
+import Text, { VeryBoldText, BoldText } from '../../../components/Text'
+import Input from '../../../components/Input'
+import Button from '../../../components/Button'
+import Header from '../../../components/Header'
 //import { setAuthToken } from '../../helpers/token'
-import { showApiError } from '../../helpers/api'
+import { showApiError } from '../../../helpers/api'
 import BackIcon from '../../assets/icons/back-icon.svg'
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio'
+import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 
-const CreateBusiness = ({ navigation }) => {
+const Teams = ({ navigation }) => {
+  const [otp, setOTP] = useState("")
+  const pinInput = React.createRef();
 
+  const _checkCode = (code) => {
+    if (code != '1234') {
+      pinInput.current.shake()
+        .then(() => setOTP(""));
+    }
+  }
   const [user, setUser] = useState({
     username: '',
     password: '',
@@ -39,7 +48,7 @@ const CreateBusiness = ({ navigation }) => {
   }
 
   const handleLogin = async () => {
-    navigation.navigate('Home')
+    navigation.navigate('CreateBusiness')
   }
 
   return (
@@ -48,26 +57,55 @@ const CreateBusiness = ({ navigation }) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
-        <Header back noRight  title='Create Business' progress={0.9}/>
+        <Header back noRight  title='Create Business' progress={0.7}/>
         <ScrollView style={styles.content}>
           <SafeAreaView style={styles.headerContainer}>
             <View style={styles.header}>
               <Ionicons name="ios-information-circle-sharp" size={24} color="black" />
               <Text style={ styles.headerText }>
-                Business Profile Setup
+                Profile Setup
               </Text>
             </View>
           </SafeAreaView>
           <View style={styles.body}>
-            
             <Input
-              label="Business name"
-              placeholder="Real Estate"
+              label="First name"
+              placeholder="Adetayo"
               value={user.username}
               onChangeText={(username) => handleInput({ username })}
               keyboardType="default"
               autoCapitalize="none"
             />
+            <Input
+              label="Last name"
+              placeholder="Olaitan"
+              value={user.username}
+              onChangeText={(username) => handleInput({ username })}
+              keyboardType="default"
+              autoCapitalize="none"
+            />
+
+            <View style={styles.otp}>
+            <Text style={styles.title}>Enter Pin</Text>
+              <SmoothPinCodeInput
+                password mask="﹡"
+                ref={pinInput}
+                value={otp}
+                onTextChange={code => setOTP(code)}
+                onFulfill={_checkCode}
+                onBackspace={() => console.log('No more back.')}
+                />
+                <Text style={styles.title}>Confirm Pin</Text>
+                <SmoothPinCodeInput
+                password mask="﹡"
+                ref={pinInput}
+                value={otp}
+                onTextChange={code => setOTP(code)}
+                onFulfill={_checkCode}
+                onBackspace={() => console.log('No more back.')}
+                />
+            </View>
+
             <Button
               //loading={loading}
               onPress={handleLogin}
@@ -149,6 +187,9 @@ const styles = StyleSheet.create({
     color: textSecondary,
     marginTop: 30,
   },
+  otp: {
+    
+  },
 })
 
-export default CreateBusiness
+export default Teams
