@@ -25,7 +25,7 @@ import BackIcon from '../../../assets/icons/back-icon.svg'
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 
-const Home = ({ navigation }) => {
+const Settings = ({ navigation }) => {
   const [otp, setOTP] = useState("")
   const pinInput = React.createRef();
 
@@ -57,6 +57,7 @@ const Home = ({ navigation }) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
+        <Header back noRight  title='Inventory' progress={0.7}/>
         <ScrollView style={styles.content}>
           <SafeAreaView style={styles.headerContainer}>
             <View style={styles.header}>
@@ -67,7 +68,58 @@ const Home = ({ navigation }) => {
             </View>
           </SafeAreaView>
           <View style={styles.body}>
-            
+            <Input
+              label="First name"
+              placeholder="Adetayo"
+              value={user.username}
+              onChangeText={(username) => handleInput({ username })}
+              keyboardType="default"
+              autoCapitalize="none"
+            />
+            <Input
+              label="Last name"
+              placeholder="Olaitan"
+              value={user.username}
+              onChangeText={(username) => handleInput({ username })}
+              keyboardType="default"
+              autoCapitalize="none"
+            />
+
+            <View style={styles.otp}>
+            <Text style={styles.title}>Enter Pin</Text>
+              <SmoothPinCodeInput
+                password mask="﹡"
+                ref={pinInput}
+                value={otp}
+                onTextChange={code => setOTP(code)}
+                onFulfill={_checkCode}
+                onBackspace={() => console.log('No more back.')}
+                />
+                <Text style={styles.title}>Confirm Pin</Text>
+                <SmoothPinCodeInput
+                password mask="﹡"
+                ref={pinInput}
+                value={otp}
+                onTextChange={code => setOTP(code)}
+                onFulfill={_checkCode}
+                onBackspace={() => console.log('No more back.')}
+                />
+            </View>
+
+            <Button
+              //loading={loading}
+              onPress={handleLogin}
+              style={{marginTop:30,padding:25}}
+            >
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>Next</Text>
+                <MaterialIcons
+                  name="arrow-right-alt"
+                  size={22}
+                  color="#fff"
+                />
+              </View>
+            </Button>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -140,4 +192,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Home
+export default Settings
