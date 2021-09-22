@@ -15,6 +15,8 @@ import RBSheet from 'react-native-raw-bottom-sheet'
 import { Ionicons } from '@expo/vector-icons'
 import moment from 'moment'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
+import PhoneInput from 'react-native-phone-input';
+import CountryPicker from 'react-native-country-picker-modal'
 
 import Text from './Text'
 import {
@@ -23,7 +25,7 @@ import {
   borderGrey,
   blue,
   backgroundGrey,
-} from '../constants/colors'
+} from '../config/colors'
 import CalenderIcon from '../assets/icons/calendar-icon.svg'
 
 export default ({
@@ -40,6 +42,7 @@ export default ({
   style = {},
   editable = true,
   showLabel = true,
+  showCountryCode = false,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false)
@@ -84,7 +87,26 @@ export default ({
           <LeftIcon />
         </View>
       )}
-      <TextInput
+      {showCountryCode==true ? 
+      (
+        <PhoneInput
+        style={{
+          color: textSecondary,
+          flex: 1,
+          height: '100%',
+          fontFamily: 'UbuntuRegular',
+          textAlignVertical: multiline ? 'top' : 'center',
+          ...style,
+        }}
+        initialCountry={'ng'}
+        textProps={{
+            placeholder: 'Enter a phone number...'
+        }}
+        />
+      ) 
+      : 
+      (
+        <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -105,7 +127,9 @@ export default ({
         }}
         {...props}
       />
-      {secureTextEntry
+      )
+      }
+     {secureTextEntry
         ? (
           <TouchableOpacity
             onPress={() => setShowPassword(() => !showPassword)}
