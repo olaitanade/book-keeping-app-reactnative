@@ -1,6 +1,7 @@
 export const textPrimary = '#393A4A'
 export const textSecondary = '#6B6C7E'
 export const textDisabled = '#A7A9BC'
+export const textColorSecondary = '#6B6C7E'
 
 export const backgroundGrey = '#F1F2F6'
 export const backgroundGrey2 = '#F7F8F9'
