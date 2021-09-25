@@ -2,10 +2,12 @@ import React from 'react'
 import {
   TouchableOpacity,
   ActivityIndicator,
+  View,
 } from 'react-native'
 
-import { blue } from '../config/colors'
-import Text from './Text'
+import { backgroundGrey, blue, green, red, crimson, white } from '../config/colors'
+import Text, { BoldText } from './Text'
+import { AntDesign } from '@expo/vector-icons'
 
 const Button = ({
   title = '',
@@ -58,6 +60,28 @@ const Button = ({
           </Text>
         )}
     </TouchableOpacity>
+  )
+}
+
+export const TransactionButton = ({
+  moneyIn = false,
+}) => {
+  return (
+    <Button style={{width:'45%', height:65, marginHorizontal: 10}} backgroundColor={moneyIn ? green : red}>
+        <View>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignContent: 'center', alignItems:'center'}}>
+            {
+              moneyIn?
+                <AntDesign name="pluscircleo" size={15} color={white} />
+              :
+                <AntDesign name="minuscircleo" size={15} color={white} />
+            }
+          
+          <BoldText style={{color:white, fontSize:17, marginHorizontal:5}}> {moneyIn ? 'Money In' : 'Money Out'}</BoldText>
+          </View>
+          <Text style={{color:white,fontSize:11}}>{moneyIn ? 'Click here to record income' : 'Click here to record expense'}</Text>
+        </View>
+    </Button>
   )
 }
 

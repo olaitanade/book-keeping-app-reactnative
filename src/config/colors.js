@@ -23,5 +23,6 @@ export const transparentBlue = '#F0F5FF'
 
 export const pink = '#F48989'
 export const red = '#DA1414'
+export const crimson = '#FF0000'
 
 export const white = '#fff'

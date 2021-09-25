@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   View,
   SafeAreaView,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Dimensions,
   TouchableOpacity,
   ScrollView,
 } from 'react-native'
@@ -13,13 +14,18 @@ import { Feather, Ionicons, FontAwesome } from '@expo/vector-icons'
 import {
   white,
   backgroundGrey,
+  borderGrey,
   red,
+  orange,
+  green,
+  crimson,
   blue,
   textSecondary,
 } from '../../../config/colors'
 import Text, { VeryBoldText, BoldText } from '../../../components/Text'
+import RBSheet from 'react-native-raw-bottom-sheet'
 import Input, {Picker} from '../../../components/Input'
-import Button, {ImageButton, FAB} from '../../../components/Button'
+import Button, {ImageButton, FAB, TransactionButton} from '../../../components/Button'
 import Header from '../../../components/Header'
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio'
 
@@ -28,6 +34,7 @@ const Home = ({ navigation }) => {
     { label: 'Shoe Store', value: 1 },
   ]
   const [business, setBusiness] = useState(demoBusiness[0])
+  const bottomSheet = useRef()
   
 
   return (
@@ -61,10 +68,20 @@ const Home = ({ navigation }) => {
           </SafeAreaView>
         <ScrollView style={styles.content}>
           <View style={styles.reportCard}>
-              <Text style={{color: white}}>Today's Balance</Text>
-              <VeryBoldText style={{color: white, fontSize: 28}}>N100,000</VeryBoldText>
+              <View style={{flexDirection: 'row'}}>
+              <View>
+                  <Text style={{color: crimson}}>Today's Money Out</Text>
+                  <VeryBoldText style={{color: crimson, fontSize: 28}}>N100,000</VeryBoldText>
+                </View>
+                <View style={{width: 2, backgroundColor:white, borderRadius:5, marginHorizontal:10}}/>
+                <View>
+                  <Text style={{color: green}}>Today's Money In</Text>
+                  <VeryBoldText style={{color: green, fontSize: 28}}>N100,000</VeryBoldText>
+                </View>
+              </View>
+              
               <View style={{flexDirection: 'row', margin:7}}>
-                <Text style={{color: white}}>Total Balance: </Text>
+                <Text style={{color: white}}>Today's Balance: </Text>
                 <VeryBoldText style={{color: white}}>N100,000</VeryBoldText>
               </View>
               <TouchableOpacity style={{flexDirection:'row', padding: 5, alignItems: 'center', borderWidth: 1, borderColor: white, borderRadius:10}}>
@@ -75,12 +92,12 @@ const Home = ({ navigation }) => {
           </View>
           <TouchableOpacity style={{flexDirection:'row', marginHorizontal: 19, padding: 10}}>
               <View style={{flexDirection:'row', alignItems: 'center',flex:1}}>
-                <FontAwesome name="user-times" size={19} color={red} />
+                <FontAwesome name="user-times" size={19} color={crimson} />
                 <VeryBoldText style={{marginHorizontal: 10, fontSize: 16}}>Debtors</VeryBoldText>
               </View>
               <View style={{flexDirection:'row',alignItems: 'center', justifyContent: 'flex-end',flex:1}}>
-                <VeryBoldText style={{marginHorizontal: 10, fontSize: 16, color: red}}>N1,000</VeryBoldText>
-                <FontAwesome name="caret-right" size={20} color={red} />
+                <VeryBoldText style={{marginHorizontal: 10, fontSize: 16, color: crimson}}>N1,000</VeryBoldText>
+                <FontAwesome name="caret-right" size={20} color={crimson} />
               </View>
           </TouchableOpacity>
           <View style={styles.body}>
@@ -89,12 +106,38 @@ const Home = ({ navigation }) => {
             <Text style={{marginHorizontal: 10, alignSelf: 'center'}}>Your transaction will display here when you add them.</Text>
           </View>
         </ScrollView>
-        <FAB style={{width: 150, height: 50}}>
+        <FAB onPress={()=> bottomSheet.current?.open?.()} style={{width: 150, height: 50}}>
           <Text style={{marginHorizontal: 10, alignSelf: 'center', color: white}}>
             + Add Transaction
           </Text>
         </FAB>
       </KeyboardAvoidingView>
+      <RBSheet
+        ref={bottomSheet}
+        height={Dimensions.get('window').height * 0.20}
+        duration={500}
+        dragFromTopOnly
+        closeOnDragDown
+        customStyles={{
+          container: {
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+          },
+          draggableIcon: {
+            width: 50,
+            height: 5,
+            borderRadius: 100,
+            backgroundColor: borderGrey,
+          },
+        }}
+      >
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={{ flex: 1 , flexDirection: 'row', marginTop:10}}>
+            <TransactionButton/>
+            <TransactionButton moneyIn/>
+          </View>
+        </SafeAreaView>
+      </RBSheet>
     </View>
   )
 }
