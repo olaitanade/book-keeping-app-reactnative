@@ -9,19 +9,21 @@ import {
 import {
   borderGrey,
   red,
+  blue,
   textColorSecondary,
   veryLightBlue,
 } from '../config/colors'
 import { BoldText } from './Text'
+import { AntDesign,FontAwesome5, FontAwesome ,MaterialIcons,Feather} from '@expo/vector-icons'; 
 
-import HomeIcon from '../assets/icons/home-icon.svg'
+import HomeIcon from '../assets/icons/better.svg'
 
 const BottomTab = ({ navigation }) => {
   const links = [
     {
-      text: 'Home',
-      link: 'HomeStack',
-      index: 0,
+      text: 'Teams',
+      link: 'TeamStack',
+      index: 3,
     },
     {
       text: 'Inventory',
@@ -29,14 +31,14 @@ const BottomTab = ({ navigation }) => {
       index: 1,
     },
     {
+      text: 'Home',
+      link: 'HomeStack',
+      index: 0,
+    },
+    {
       text: 'Invoice',
       link: 'InvoiceStack',
       index: 2,
-    },
-    {
-      text: 'Teams',
-      link: 'TeamStack',
-      index: 3,
     },
     {
       text: 'More',
@@ -47,22 +49,23 @@ const BottomTab = ({ navigation }) => {
 
   const getIcon = (link, active) => {
     const iconStyles = {
-      height: 18,
-      width: 18,
-      color: active ? red : textColorSecondary,
+      height: 24,
+      width: 24,
+      size: 24,
+      color: active ? blue : textColorSecondary,
     }
 
     switch (link) {
       case 'HomeStack':
-        return <HomeIcon {...iconStyles} />
+        return <FontAwesome5 name="home" {...iconStyles} />
       case 'InventoryStack':
-        return <HomeIcon {...iconStyles} />
+        return  <FontAwesome5 name="store" {...iconStyles} />
         case 'InvoiceStack':
-        return <HomeIcon {...iconStyles} />
+        return <FontAwesome5 name="file-invoice" {...iconStyles} />
       case 'TeamStack':
-        return <HomeIcon {...iconStyles} />
+        return <FontAwesome name="users" {...iconStyles} />
         case 'MoreStack':
-        return <HomeIcon {...iconStyles} />
+        return <AntDesign name="appstore1" {...iconStyles} />
       default:
         return null
     }
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   textActive: {
-    color: red,
+    color: blue,
     marginLeft: 7,
   },
 })

@@ -61,6 +61,31 @@ const Button = ({
   )
 }
 
+export const ImageButton = ({
+  onPress = () => null,
+  style = {},
+  disabled = false,
+  children,
+  ...props
+}) => {
+  return (
+    <TouchableOpacity
+      style={{
+        margin:5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        ...style,
+      }}
+      onPress={onPress}
+      disabled={disabled}
+      activeOpacity={0.6}
+      {...props}
+    >
+      {children}
+    </TouchableOpacity>
+  )
+}
+
 export const FAB = ({
   onPress = () => null,
   style = {},
