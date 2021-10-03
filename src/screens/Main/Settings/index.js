@@ -20,9 +20,6 @@ import Input from '../../../components/Input'
 import Button from '../../../components/Button'
 import Header from '../../../components/Header'
 //import { setAuthToken } from '../../helpers/token'
-import { showApiError } from '../../../helpers/api'
-import BackIcon from '../../../assets/icons/back-icon.svg'
-import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
 
 const Settings = ({ navigation }) => {
