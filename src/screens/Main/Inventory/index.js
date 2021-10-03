@@ -29,7 +29,7 @@ const Inventory = ({ navigation }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
         <ScrollView style={styles.content}>
-          
+          <Text>Inventory coming soon</Text>
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

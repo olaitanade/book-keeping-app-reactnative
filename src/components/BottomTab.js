@@ -57,9 +57,9 @@ const BottomTab = ({ navigation }) => {
 
     switch (link) {
       case 'HomeStack':
-        return <FontAwesome5 name="home" {...iconStyles} />
+        return <FontAwesome5 name="store" {...iconStyles} />
       case 'InventoryStack':
-        return  <FontAwesome5 name="store" {...iconStyles} />
+        return  <FontAwesome5 name="box-open" {...iconStyles} /> 
         case 'InvoiceStack':
         return <FontAwesome5 name="file-invoice" {...iconStyles} />
       case 'TeamStack':

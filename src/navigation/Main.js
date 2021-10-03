@@ -1,8 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { MaterialIcons } from '@expo/vector-icons'
-import HomeIcon from '../assets/icons/fr.svg'
 import BottomTab from '../components/BottomTab'
 import Home from '../screens/Main/Home'
 import Inventory from '../screens/Main/Inventory'
